@@ -3,6 +3,7 @@
     margin: 0 auto;
     max-width: 800px;
     padding: 25px;
+    font-size:0.85em;
 }
 
 .comments_header {
@@ -15,6 +16,7 @@
 .comment {
     color: #727272;
     margin: 0 0 30px;
+    border-bottom: 1px solid #ccc;
 }
 .comment:last-child {
     padding-bottom: 25px;
@@ -26,7 +28,7 @@
     font-weight: bold;
 }
 .comment_date {
-    float: right;
+    float: left;
     display: inline;
     font-style: italic;
     margin-left: 1em;
@@ -34,13 +36,13 @@
 
 .comment_message {
     clear: both;
-    background-color: rgba(0, 0, 0, 0.06);
+    /*background-color: rgba(0, 0, 0, 0.06);*/
     border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 3px rgba(0, 0, 0, 0.1);*/
     color: #333333;
     display: block;
     line-height: 1.6;
-    padding: 10px 15px;
+    padding: 10px 0px;
 }
 
 .comment_addcomment {

@@ -10,7 +10,7 @@ Class commentcava
 	const post_uri   = '';
 
 	//allow html in comments or not?
-	const allow_html = 1;
+	const allow_html = false;
 	
 	//PDO variable
 	protected $db;
@@ -44,7 +44,11 @@ Class commentcava
 	{
 		if (empty($url)) $url = self::post_uri;
 
-		return '<form method="post" action="'.$url.'?a=p" id="comment_form" class="comment_form" style="display: block;"><input value="'.$fromurl.'" name="url" type="hidden"><div class="comment_inputuser">New comment from <input value="" placeholder="your nickname" size="20" name="name" type="text"></div><div class="comment_inputmessage"><textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea></div><div class="comment_recaptcha"><input placeholder="Copy the code" name="captcha" class="captcha" type="text"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="'.$url.'?a=c"></a></div><div class="comment_submit"><input value="Send" name="submit" type="submit"></div></form>';
+		return '<form method="post" action="'.$url.'?a=p" id="comment_form" class="comment_form" style="display: block;">
+      <input value="'.$fromurl.'" name="url" type="hidden">
+      <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>
+      <input value="" placeholder="Your nickname" size="20" name="name" type="text">
+      <div class="comment_recaptcha"><input placeholder="Copy the code" name="captcha" class="captcha" type="text"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="'.$url.'?a=c"></a></div><div class="comment_submit"><input value="Send" name="submit" type="submit"></div></form>';
 	}
 	function addComment($url, $name, $comment, $captcha)
 	{

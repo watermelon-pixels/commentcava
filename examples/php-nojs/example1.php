@@ -28,6 +28,7 @@
         else
         {
           //Show comments
+          echo '<h4>'.count($comments).' comment(s)</h4>';
           foreach ($comments as $key => $comment) {
             echo '<div class="comment" style=""><div><span class="comment_user">'.$comment->author.'</span><span class="comment_date">'.$comment->date.'</span></div><div class="comment_message">'.$comment->message.'</div></div>';
           }
