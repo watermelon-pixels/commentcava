@@ -1,10 +1,7 @@
 <?php
 
-Class commentcava
+class commentcava
 {
-
-	//Constants
-	const default_db = './commentcava.sqlite';
 
 	//commentcava.php path for generating comment form
 	const post_uri   = '';
@@ -15,37 +12,69 @@ Class commentcava
 	//PDO variable
 	protected $db;
 
-	/*
-	 * Instanciate db and create it if not exists
-	 */
-	function __construct($db = null)
-	{
-		session_start();
-
-		//Create DB if not exists
-		if (empty($db)) $db = self::default_db;
-		$this->db = new PDO("sqlite:".$db);
-		$query = $this->db->prepare('CREATE TABLE IF NOT EXISTS "comments" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "post" VARCHAR NOT NULL , "author" VARCHAR NOT NULL , "date" TIMESTAMP DEFAULT (datetime(\'now\',\'localtime\')), "message" TEXT NOT NULL )');
-		$query->execute();
-	}
+  /*
+  * Verify that we received a PDO database
+  */
+  public function __construct(PDO $db)
+  {
+    if ($db === null)
+    {
+      throw new InvalidArgumentException('Bad PDO instance given.');
+    }
+    $this->db = $db;
+  }
 
 	/*
 	 * Get comments for a specific page
 	 */
 	function getComments($url)
 	{
-        $query = $this->db->prepare('SELECT * FROM comments WHERE post = :url ORDER BY id');
-        $query->bindValue(':url', $url, PDO::PARAM_STR);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_OBJ);
+		$orderedcomments = Array();
+		$orderedcomments = $this->getMultiLevelComments($orderedcomments, $url);
+    return $orderedcomments;
 	}
 
-	function addComment($url, $name, $comment, $captcha)
+	function getMultiLevelComments($orderedcomments, $url, $reply = 0)
+	{
+		$query = $this->db->prepare('SELECT * FROM comments WHERE post = :post AND reply = :reply ORDER BY id, reply');
+		$query->bindValue(':post', $url, PDO::PARAM_STR);
+		$query->bindValue(':reply', $reply, PDO::PARAM_STR);
+		$query->execute();
+		$comments = $query->fetchAll(PDO::FETCH_OBJ);
+
+		foreach ($comments as $comment) {
+      array_push($orderedcomments, $comment);
+			$orderedcomments = $this->getMultiLevelComments($orderedcomments, $comment->post, $comment->id);
+		}
+		return $orderedcomments;
+	}
+
+	function addComment($replyto, $url, $name, $comment, $captcha)
 	{
 		//Check if username or message are not empty && captcha is okay
 		if (!empty($name) && !empty($comment) && !empty($captcha) && strtoupper($captcha) == $_SESSION['captcha']) {
 
-	        $query = $this->db->prepare('INSERT INTO comments (post, author, message)  VALUES (:post, :author, :message);');
+					if (empty($replyto))
+					{
+						$query = $this->db->prepare('INSERT INTO comments (post, reply, author, message)  VALUES (:post, 0, :author, :message);');
+					}
+					else
+					{
+						$level = 0;
+						$subquery = $this->db->prepare('SELECT level FROM comments WHERE post = :url AND id = :id');
+						$subquery->bindValue(':url', $url, PDO::PARAM_STR);
+						$subquery->bindValue(':id', $replyto, PDO::PARAM_STR);
+						if ($subquery->execute())
+						{
+							$level = $subquery->fetchColumn();
+							$level = $level + 1;
+						}
+
+						$query = $this->db->prepare('INSERT INTO comments (post, reply, level, author, message)  VALUES (:post, :reply, :level, :author, :message);');
+						$query->bindValue(':reply', $replyto, PDO::PARAM_STR);
+            $query->bindValue(':level', $level, PDO::PARAM_STR);
+					}
+
 	        $query->bindValue(':post', $url, PDO::PARAM_STR);
 	        $query->bindValue(':author', $name, PDO::PARAM_STR);
 	        if (!empty($this->allow_html)) {
@@ -101,5 +130,3 @@ Class commentcava
 	}
 
 }
-
-?>

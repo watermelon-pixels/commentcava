@@ -17,6 +17,44 @@ var button_to_comment = true;
 var allow_reply = true;
 
 
+function replyto(theid) {
+	var obj = document.getElementById('replyto');
+	if (theid == -1) {
+		obj.value = '';
+	}
+	else {
+		obj.value = theid;
+	}
+}
+
+function toggle(theobj) {
+	var obj = document.getElementById(theobj);
+
+	if (obj.style.display == 'none') {
+		obj.style.display = 'block';
+	}
+	else {
+		obj.style.display = 'none';
+	}
+}
+
+function show(theobj) {
+	var obj = document.getElementById(theobj);
+	obj.style.display = 'block';
+}
+
+function hide(theobj) {
+	var obj = document.getElementById(theobj);
+	obj.style.display = 'none';
+}
+
+function reloadCaptcha() {
+
+	var obj = document.getElementById('captcha');
+	obj.src = gurl + '?a=c&rand=' + Math.random();
+}
+
+
 $(function() {
 
 	$.ajax({
@@ -33,22 +71,20 @@ $(function() {
 
 		for (var i=0; i<json.length; i++) {
 			if (i == 0) {
-				$('#comments').html('<h4>' + json.length + ' comment(s)</h4>\
-				<div class="comment" style="display:none">\
-					<div>\
-						<span class="user">'+ json[i].author + '</span>\
-						<span class="date">'+ json[i].date + '</span>\
-						<span class="reply"><a href="#comment' + json[i].id + '" onclick="replyto(\'' + json[i].id + '\');toggle(\'comment_form\');toggle(\'addcomment\')">reply</a></span>\
-					</div>\
+				$('#comments').html('<h4 class="title">' + json.length + ' comment(s)</h4>\
+				<div class="comment level' + json[i].level + '">\
+					<span class="user">'+ json[i].author + '</span>\
+					<span class="date">'+ json[i].date + '</span>\
+					<span class="reply"><a href="#comment' + json[i].id + '" onclick="replyto(' + json[i].id + ');show(\'comment_form\');hide(\'addcomment\')">reply</a></span>\
 					<div class="message">' + json[i].message + '</div>\
 				</div>');
 			}
 			else {
-				$('#comments').append('<div class="comment" style="display:none">\
+				$('#comments').append('<div class="comment level' + json[i].level + '" style="display:none">\
 					<div>\
 						<span class="user">'+ json[i].author + '</span>\
 						<span class="date">'+ json[i].date + '</span>\
-						<span class="reply"><a href="#comment' + json[i].id + '" onclick="replyto(\'' + json[i].id + '\');toggle(\'comment_form\');toggle(\'addcomment\')">reply</a></span>\
+						<span class="reply"><a href="#comment' + json[i].id + '" onclick="replyto(' + json[i].id + ');show(\'comment_form\');hide(\'addcomment\')">reply</a></span>\
 					</div>\
 					<div class="message">'+ json[i].message + '</div>\
 				</div>');
@@ -65,9 +101,9 @@ $(function() {
 
 	complete: function( xhr, status ) {
 		if (button_to_comment == true) {
-			$('#comments').append('<a id="addcomment" class="addcomment" style="display:none" href="javascript:toggle(\'comment_form\');toggle(\'addcomment\')">Click here to leave a comment</a>\
+			$('#comments').append('<a id="addcomment" class="addcomment" style="display:none" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a>\
 				<form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
-				  <input type="hidden" value="" name="replyto">\
+				  <input type="hidden" value="" id="replyto" name="replyto">\
 					<input type="hidden" value="' + document.URL.replace(window.location.hash, '') + '" name="url">\
 					<input type="text" value="" placeholder="your nickname" size="20" name="name">\
 					<textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
@@ -76,14 +112,14 @@ $(function() {
 						<a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
 					</div>\
 					<div class="comment_submit">\
-						<input type="button" value="Cancel" onclick="toggle(\'comment_form\');toggle(\'addcomment\')">\
+						<input type="button" value="Cancel" onclick="hide(\'comment_form\');show(\'addcomment\')">\
 						<input type="submit" value="Send" name="submit">\
 					</div>\
 				</form>');
 		}
 		else {
 			$('#comments').append('<form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
-		    <input type="hidden" value="" name="replyto">\
+		    <input type="hidden" value="" id="replyto" name="replyto">\
 				<input type="hidden" name="url" value="' + document.URL.replace(window.location.hash, '') + '"/>\
 				<input type="text" value="" placeholder="your nickname" size="20" name="name">\
 				<textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
@@ -107,24 +143,3 @@ $(function() {
 
 	});
 });
-
-function replyto(theid) {
-
-}
-
-function toggle(theobj) {
-	var obj = document.getElementById(theobj);
-
-	if (obj.style.display == 'none') {
-		obj.style.display = 'block';
-	}
-	else {
-		obj.style.display = 'none';
-	}
-}
-
-function reloadCaptcha() {
-
-	var obj = document.getElementById('captcha');
-	obj.src = gurl + '?a=c&rand=' + Math.random();
-}

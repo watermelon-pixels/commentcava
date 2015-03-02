@@ -1,138 +1,53 @@
 #comments {
-    background-color: #EEEEEE;
-    margin: 0 auto;
-    max-width: 800px;
-    padding: 25px;
-    font-size:0.85em;
+  background-color: #F00;
+  margin: 0 auto;
+  max-width: 968px;
+  padding: 1em;
+  font-size:0.85em;
 }
 
-.comments_header {
-    margin: 0;
+#comments .loading {
+  text-align: center;
 }
-.comments_header a {
-    color: #525252;
+
+#comments .title {
+  background-color: #ff7300;
+  margin-top: 0;
 }
 
 .comment {
-    color: #727272;
-    margin: 0 0 30px;
-    border-bottom: 1px solid #ccc;
-}
-.comment:last-child {
-    padding-bottom: 25px;
+  background-color: #f58b00;
+  margin-bottom: 1em;
 }
 
+.comment.level1{margin-left:1em}
+.comment.level2{margin-left:2em}
+.comment.level3{margin-left:3em}
+.comment.level4{margin-left:4em}
+.comment.level5{margin-left:5em}
+.comment.level6{margin-left:6em}
+
 .comment .user {
-    float: left;
-    display: inline;
-    font-weight: bold;
+  background-color: #f7c500;
 }
+
 .comment .date {
-    float: left;
-    display: inline;
-    font-style: italic;
-    margin-left: 1em;
-    margin-right: 0.5em;
+  background-color: #f3f700;
+}
+
+.comment .reply {
+  background-color: #a8f700;
+}
+
+.comment .reply a {
+  text-decoration: none;
 }
 
 .comment .message {
-    clear: both;
-    /*background-color: rgba(0, 0, 0, 0.06);*/
-    border-radius: 3px 3px 3px 3px;
-    /*box-shadow: 0 3px rgba(0, 0, 0, 0.1);*/
-    color: #333333;
-    display: block;
-    line-height: 1.6;
-    padding: 10px 0px;
+  background-color: #35f700;
 }
 
-.comment .addcomment {
-    background-color: #555555;
-    border: 0 none;
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    color: #EEEEEE;
-    display: block;
-    margin: 0;
-    padding: 10px 20px;
-    text-decoration: none;
-}
-
-.comment .form {
-    background-color: rgba(0, 0, 0, 0.06);
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
-    color: #444444;
-    margin: 0;
-    padding: 20px;
-}
-
-.comment .inputuser {
-    margin: 0 0 10px;
-}
-
-.comment .inputuser > input {
-    background-color: #FFFFFF;
-    border: 0 none;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    padding: 4px 10px;
-}
-
-.comment .inputmessage {
-    background-color: rgba(0, 0, 0, 0.06);
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
-    color: #333333;
-    display: block;
-    line-height: 1.6;
-    padding: 10px 15px;
-}
-
-.comment .inputmessage > textarea {
-    background-color: #FFFFFF;
-    border: 0 none;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    width: 97.2%;
-}
-
-.comment .recaptcha {
-    background-color: rgba(0, 0, 0, 0.06);
-    border-radius: 3px 3px 3px 3px;
-    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
-    color: #333333;
-    display: block;
-    line-height: 1.6;
-    padding: 10px 15px;
-    margin-top: 20px;
-}
-
-.captcha {
-    text-transform: uppercase;
-}
-
-.comment .recaptcha > input {
-    background-color: #FFFFFF;
-    border: 0 none;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    height: 30px;
-    padding: 10px;
-    vertical-align: top;
-    width: 150px;
-    margin-right: 5px;
-}
-
-.comment .submit {
-    margin-top: 20px;
-}
-
-.comment .submit > input {
-    background-color: #FFFFFF;
-    border: 0 none;
-    box-shadow: 0 2px rgba(0, 0, 0, 0.1);
-    color: #444444;
-    cursor: pointer;
-    display: block;
-    margin: -3px auto 0;
-    padding: 2px 8px;
+a.addcomment {
+  background-color: #f7ad00;
+  text-decoration: none;
 }
