@@ -17,10 +17,10 @@ if (isset($_GET['a']) && ($_GET['a'] == 'g') and isset($_GET['url'])) {
   header('Content-type: application/json');
   header("HTTP/1.1 200 OK");
 
-	try {
-		$comments = $commentcava->getComments($_GET['url']);
+  try {
+    $comments = $commentcava->getComments($_GET['url']);
   }
-	catch (Exception $e) {
+  catch (Exception $e) {
     var_dump($e);
     $comments = array();
   }
@@ -29,15 +29,15 @@ if (isset($_GET['a']) && ($_GET['a'] == 'g') and isset($_GET['url'])) {
 
 //Captcha
 if (isset($_GET['a']) && $_GET['a'] == 'c') {
-	echo $commentcava->generateCaptcha();
+  echo $commentcava->generateCaptcha();
 }
 
 //POST a comment
 if (isset($_GET['a']) && $_GET['a'] == 'p') {
 
-	//Add the comment
-	$commentcava->addComment($_POST['replyto'], $_POST['url'], $_POST['name'], $_POST['comment'], $_POST['captcha'] );
+  //Add the comment
+  $commentcava->addComment($_POST['replyto'], $_POST['url'], $_POST['name'], $_POST['comment'], $_POST['captcha'] );
 
-	//redirect to the url
-	header('Location: '.$_POST['url']);
+  //redirect to the url
+  header('Location: '.$_POST['url']);
 }
