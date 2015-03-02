@@ -22,19 +22,20 @@
     padding-bottom: 25px;
 }
 
-.comment_user {
+.comment .user {
     float: left;
     display: inline;
     font-weight: bold;
 }
-.comment_date {
+.comment .date {
     float: left;
     display: inline;
     font-style: italic;
     margin-left: 1em;
+    margin-right: 0.5em;
 }
 
-.comment_message {
+.comment .message {
     clear: both;
     /*background-color: rgba(0, 0, 0, 0.06);*/
     border-radius: 3px 3px 3px 3px;
@@ -45,7 +46,7 @@
     padding: 10px 0px;
 }
 
-.comment_addcomment {
+.comment .addcomment {
     background-color: #555555;
     border: 0 none;
     border-radius: 3px 3px 3px 3px;
@@ -57,7 +58,7 @@
     text-decoration: none;
 }
 
-.comment_form {
+.comment .form {
     background-color: rgba(0, 0, 0, 0.06);
     border-radius: 3px 3px 3px 3px;
     box-shadow: 0 3px rgba(0, 0, 0, 0.1);
@@ -66,18 +67,18 @@
     padding: 20px;
 }
 
-.comment_inputuser {
+.comment .inputuser {
     margin: 0 0 10px;
 }
 
-.comment_inputuser > input {
+.comment .inputuser > input {
     background-color: #FFFFFF;
     border: 0 none;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
     padding: 4px 10px;
 }
 
-.comment_inputmessage {
+.comment .inputmessage {
     background-color: rgba(0, 0, 0, 0.06);
     border-radius: 3px 3px 3px 3px;
     box-shadow: 0 3px rgba(0, 0, 0, 0.1);
@@ -87,7 +88,7 @@
     padding: 10px 15px;
 }
 
-.comment_inputmessage > textarea {
+.comment .inputmessage > textarea {
     background-color: #FFFFFF;
     border: 0 none;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
@@ -95,7 +96,7 @@
     width: 97.2%;
 }
 
-.comment_recaptcha {
+.comment .recaptcha {
     background-color: rgba(0, 0, 0, 0.06);
     border-radius: 3px 3px 3px 3px;
     box-shadow: 0 3px rgba(0, 0, 0, 0.1);
@@ -110,7 +111,7 @@
     text-transform: uppercase;
 }
 
-.comment_recaptcha > input {
+.comment .recaptcha > input {
     background-color: #FFFFFF;
     border: 0 none;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
@@ -121,11 +122,11 @@
     margin-right: 5px;
 }
 
-.comment_submit {
+.comment .submit {
     margin-top: 20px;
 }
 
-.comment_submit > input {
+.comment .submit > input {
     background-color: #FFFFFF;
     border: 0 none;
     box-shadow: 0 2px rgba(0, 0, 0, 0.1);
@@ -135,4 +136,3 @@
     margin: -3px auto 0;
     padding: 2px 8px;
 }
-

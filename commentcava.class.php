@@ -11,7 +11,7 @@ Class commentcava
 
 	//allow html in comments or not?
 	const allow_html = false;
-	
+
 	//PDO variable
 	protected $db;
 
@@ -26,11 +26,11 @@ Class commentcava
 		if (empty($db)) $db = self::default_db;
 		$this->db = new PDO("sqlite:".$db);
 		$query = $this->db->prepare('CREATE TABLE IF NOT EXISTS "comments" ("id" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "post" VARCHAR NOT NULL , "author" VARCHAR NOT NULL , "date" TIMESTAMP DEFAULT (datetime(\'now\',\'localtime\')), "message" TEXT NOT NULL )');
-		$query->execute();	
+		$query->execute();
 	}
 
 	/*
-	 * Get comments for a specific page 
+	 * Get comments for a specific page
 	 */
 	function getComments($url)
 	{
@@ -40,16 +40,6 @@ Class commentcava
         return $query->fetchAll(PDO::FETCH_OBJ);
 	}
 
-	function generateForm($fromurl, $url = null)
-	{
-		if (empty($url)) $url = self::post_uri;
-
-		return '<form method="post" action="'.$url.'?a=p" id="comment_form" class="comment_form" style="display: block;">
-      <input value="'.$fromurl.'" name="url" type="hidden">
-      <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>
-      <input value="" placeholder="Your nickname" size="20" name="name" type="text">
-      <div class="comment_recaptcha"><input placeholder="Copy the code" name="captcha" class="captcha" type="text"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="'.$url.'?a=c"></a></div><div class="comment_submit"><input value="Send" name="submit" type="submit"></div></form>';
-	}
 	function addComment($url, $name, $comment, $captcha)
 	{
 		//Check if username or message are not empty && captcha is okay
