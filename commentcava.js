@@ -97,15 +97,20 @@ $(function()
 
   complete: function( xhr, status )
   {
+    localUser = '';
+    localWebsite = '';
+    if (localStorage.user) {localUser = localStorage.user}
+    if (localStorage.website) {localWebsite = localStorage.website}
+    
     if (button_to_comment == true)
     {
       $('#comments').append('<div class="addcomment"><a id="addcomment" href="#form" onclick="javascript:cancelreply();show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
-      <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
+      <a name="form"></a><form onsubmit="saveLocalData()" method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
         <textarea placeholder="Message" value="" name="comment"></textarea>\
-        <input type="text" value="" class="name" placeholder="Name (optional)" name="name">\
-        <input type="text" value="" class="website" placeholder="Website (optional)" name="website">\
+        <input type="text" id="comment_user" value="' + localUser + '" class="name" placeholder="Name (optional)" name="name">\
+        <input type="text" id="comment_website" value="' + localWebsite + '" class="website" placeholder="Website (optional)" name="website">\
         <div class="groupcode">\
         <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
         <a title="Reload Image" href="javascript:reloadCaptcha()"><img class="captchaimg" id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
@@ -116,12 +121,12 @@ $(function()
     }
     else
     {
-      $('#comments').append('<a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
+      $('#comments').append('<a name="form"></a><form onsubmit="saveLocalData()" method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" name="url" value="' + window.location.href.split('#')[0] + '"/>\
         <textarea placeholder="Message" value="" name="comment"></textarea>\
-        <input type="text" value="" class="name" placeholder="Name (optional)" name="name">\
-        <input type="text" value="" class="website" placeholder="Website (optional)" name="website">\
+        <input type="text" id="comment_user" value="' + localUser + '" class="name" placeholder="Name (optional)" name="name">\
+        <input type="text" id="comment_website" value="' + localWebsite + '" class="website" placeholder="Website (optional)" name="website">\
         <div class="groupcode">\
         <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
         <a title="Reload Image" href="javascript:reloadCaptcha()"><img class="captchaimg" id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
@@ -146,11 +151,17 @@ $(function()
     {
       jQuery("time.timeago").timeago();
     }
-    
+        
   }
 
   });
 });
+
+function saveLocalData()
+{
+  localStorage.user = document.getElementById("comment_user").value;
+  localStorage.website = document.getElementById("comment_website").value;
+}
 
 function cancelreply()
 {
