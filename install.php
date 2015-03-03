@@ -14,6 +14,7 @@ if (!file_exists($default_db)) {
     "reply" INTEGER DEFAULT (0) ,
     "level" INTEGER DEFAULT (0) ,
     "author" VARCHAR NOT NULL ,
+    "website" VARCHAR NOT NULL ,
     "date" TIMESTAMP DEFAULT (datetime(\'now\',\'localtime\')) ,
     "message" TEXT NOT NULL )');
   $query->execute();

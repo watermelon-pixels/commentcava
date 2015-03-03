@@ -69,9 +69,17 @@ $(function()
       }
       for (var i=0; i<comments.length; i++)
       {
+        if (comments[i].website != '')
+        {
+          spanuser = '<a href="' + comments[i].website + '">' + comments[i].author + '</a>';
+        }
+        else
+        {
+          spanuser = comments[i].author;
+        }
         $('#comments').append('<div id="comment-' + comments[i].id + '" class="comment level' + comments[i].level + '" ' + style + '>\
           <div>\
-          <span class="user">'+ comments[i].author + '</span> - \
+          <span class="user">'+ spanuser + '</span> - \
           <time class="timeago" datetime="'+ comments[i].date + '">'+ comments[i].date + '</time> - \
           <span class="reply"><a href="#form" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');">reply</a></span>\
           </div>\
@@ -95,7 +103,8 @@ $(function()
       <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
-        <input type="text" value="" placeholder="your nickname" size="20" name="name">\
+        <input type="text" value="" placeholder="your nickname" name="name">\
+        <input type="text" value="" placeholder="your website" name="website">\
         <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
         <div class="comment_recaptcha">\
         <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
@@ -112,7 +121,8 @@ $(function()
       $('#comments').append('<a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" name="url" value="' + window.location.href.split('#')[0] + '"/>\
-        <input type="text" value="" placeholder="your nickname" size="20" name="name">\
+        <input type="text" value="" placeholder="your nickname" name="name">\
+        <input type="text" value="" placeholder="your website" name="website">\
         <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
         <div class="comment_recaptcha">\
           <input type="text" placeholder="Copy the code" name="captcha" class="captcha"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\

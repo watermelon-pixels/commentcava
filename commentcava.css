@@ -39,6 +39,11 @@
   font-weight: bold;
 }
 
+.comment .user a {
+  color: #21866f;
+  text-decoration: none;
+}
+
 .comment.highlighted {
   border-left: 4px solid #21866f;
   padding-left: 4px;
