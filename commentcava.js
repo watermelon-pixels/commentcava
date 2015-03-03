@@ -31,48 +31,6 @@ var button_to_comment = true;
 * DO NOT CHANGE THE CODE BELOW, USE CONFIG VARIABLES ABOVE
 */
 
-function replyto(theid)
-{
-  var obj = document.getElementById('replyto');
-  if (theid == -1) {
-    obj.value = '';
-  }
-  else {
-    obj.value = theid;
-  }
-}
-
-function toggle(theobj)
-{
-  var obj = document.getElementById(theobj);
-
-  if (obj.style.display == 'none') {
-    obj.style.display = 'block';
-  }
-  else {
-    obj.style.display = 'none';
-  }
-}
-
-function show(theobj)
-{
-  var obj = document.getElementById(theobj);
-  obj.style.display = 'block';
-}
-
-function hide(theobj)
-{
-  var obj = document.getElementById(theobj);
-  obj.style.display = 'none';
-}
-
-function reloadCaptcha()
-{
-  var obj = document.getElementById('captcha');
-  obj.src = gurl + '?a=c&rand=' + Math.random();
-}
-
-
 $(function()
 {
 
@@ -111,7 +69,7 @@ $(function()
       }
       for (var i=0; i<comments.length; i++)
       {
-        $('#comments').append('<div class="comment level' + comments[i].level + '" ' + style + '>\
+        $('#comments').append('<div id="comment-' + comments[i].id + '" class="comment level' + comments[i].level + '" ' + style + '>\
           <div>\
           <span class="user">'+ comments[i].author + '</span> - \
           <time class="timeago" datetime="'+ comments[i].date + '">'+ comments[i].date + '</time> - \
@@ -133,7 +91,7 @@ $(function()
   {
     if (button_to_comment == true)
     {
-      $('#comments').append('<div class="addcomment"><a id="addcomment" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
+      $('#comments').append('<div class="addcomment"><a id="addcomment" href="#form" onclick="javascript:cancelreply();show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
       <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
@@ -144,7 +102,7 @@ $(function()
         <a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
         </div>\
         <div class="comment_submit">\
-        <input type="button" value="Cancel" onclick="hide(\'comment_form\');show(\'addcomment\')">\
+        <input type="button" value="Cancel" onclick="javascript:cancelreply();hide(\'comment_form\');show(\'addcomment\')">\
         <input type="submit" value="Send" name="submit">\
         </div>\
       </form>');
@@ -160,6 +118,7 @@ $(function()
           <input type="text" placeholder="Copy the code" name="captcha" class="captcha"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
         </div>\
         <div class="comment_submit">\
+          <input type="button" value="Cancel" onclick="javascript:cancelreply();">\
           <input type="submit" value="Send" name="submit">\
         </div>\
       </form>');
@@ -185,3 +144,51 @@ $(function()
 
   });
 });
+
+function cancelreply()
+{
+  var obj = document.getElementById('replyto');
+  obj.value = '';
+  jQuery(".highlighted").removeClass("highlighted");
+}
+
+function replyto(theid)
+{
+  var obj = document.getElementById('replyto');
+  obj.value = theid;
+  
+  jQuery(".highlighted").removeClass("highlighted");
+  
+  var obj = document.getElementById('comment-' + theid);
+  obj.classList.add("highlighted");
+}
+
+function toggle(theobj)
+{
+  var obj = document.getElementById(theobj);
+
+  if (obj.style.display == 'none') {
+    obj.style.display = 'block';
+  }
+  else {
+    obj.style.display = 'none';
+  }
+}
+
+function show(theobj)
+{
+  var obj = document.getElementById(theobj);
+  obj.style.display = 'block';
+}
+
+function hide(theobj)
+{
+  var obj = document.getElementById(theobj);
+  obj.style.display = 'none';
+}
+
+function reloadCaptcha()
+{
+  var obj = document.getElementById('captcha');
+  obj.src = gurl + '?a=c&rand=' + Math.random();
+}

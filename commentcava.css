@@ -39,6 +39,11 @@
   font-weight: bold;
 }
 
+.comment.highlighted {
+  border-left: 4px solid #21866f;
+  padding-left: 4px;
+}
+
 .comment .date {
   color: #606060;
 }
