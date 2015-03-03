@@ -76,7 +76,7 @@
 .addcomment {
   width: 100%;
   text-align: center;
-  background-color: #898989;
+  background-color: #21866f; /*#898989;*/
 }
 .addcomment a {
   color: white;
@@ -122,4 +122,5 @@
 .comment_form .groupcode input[type="submit"] {
   color: white;
   background-color: #21866f;
+  font-weight: bold;
 }
