@@ -51,40 +51,46 @@ class commentcava
 
   function addComment($replyto, $url, $name, $website, $comment, $captcha)
   {
-  //Check if username or message are not empty && captcha is okay
-  if (!empty($name) && !empty($comment) && !empty($captcha) && strtoupper($captcha) == $_SESSION['captcha']) {
+    //Allow anonymous comment
+    if (empty($name)) $name="Anonymous";
+    
+    if (!empty($website)) $website= $this->addScheme($website);
+    
+    //Check if username or message are not empty && captcha is okay
+    if (!empty($comment) && !empty($captcha) && strtoupper($captcha) == $_SESSION['captcha'])
+    {
 
-      if (empty($replyto))
+    if (empty($replyto))
+    {
+      $query = $this->db->prepare('INSERT INTO comments (post, reply, author, website, message)  VALUES (:post, 0, :author, :website, :message);');
+    }
+    else
+    {
+      $level = 0;
+      $subquery = $this->db->prepare('SELECT level FROM comments WHERE post = :url AND id = :id');
+      $subquery->bindValue(':url', $url, PDO::PARAM_STR);
+      $subquery->bindValue(':id', $replyto, PDO::PARAM_STR);
+      if ($subquery->execute())
       {
-        $query = $this->db->prepare('INSERT INTO comments (post, reply, author, website, message)  VALUES (:post, 0, :author, :website, :message);');
-      }
-      else
-      {
-        $level = 0;
-        $subquery = $this->db->prepare('SELECT level FROM comments WHERE post = :url AND id = :id');
-        $subquery->bindValue(':url', $url, PDO::PARAM_STR);
-        $subquery->bindValue(':id', $replyto, PDO::PARAM_STR);
-        if ($subquery->execute())
-        {
-          $level = $subquery->fetchColumn();
-          $level = $level + 1;
-        }
-
-        $query = $this->db->prepare('INSERT INTO comments (post, reply, level, author, website, message)  VALUES (:post, :reply, :level, :author, :website, :message);');
-        $query->bindValue(':reply', $replyto, PDO::PARAM_STR);
-        $query->bindValue(':level', $level, PDO::PARAM_STR);
+        $level = $subquery->fetchColumn();
+        $level = $level + 1;
       }
 
-      $query->bindValue(':post', $url, PDO::PARAM_STR);
-      $query->bindValue(':author', $name, PDO::PARAM_STR);
-      $query->bindValue(':website', $this->addScheme($website), PDO::PARAM_STR);
-      if (!empty($this->allow_html)) {
-        $query->bindValue(':message', $comment, PDO::PARAM_STR);
-      }
-      else {
-        $query->bindValue(':message', htmlentities($comment, ENT_QUOTES, "UTF-8"), PDO::PARAM_STR);
-      }
-      return $query->execute();
+      $query = $this->db->prepare('INSERT INTO comments (post, reply, level, author, website, message)  VALUES (:post, :reply, :level, :author, :website, :message);');
+      $query->bindValue(':reply', $replyto, PDO::PARAM_STR);
+      $query->bindValue(':level', $level, PDO::PARAM_STR);
+    }
+
+    $query->bindValue(':post', $url, PDO::PARAM_STR);
+    $query->bindValue(':author', $name, PDO::PARAM_STR);
+    $query->bindValue(':website', $website, PDO::PARAM_STR);
+    if (!empty($this->allow_html)) {
+      $query->bindValue(':message', $comment, PDO::PARAM_STR);
+    }
+    else {
+      $query->bindValue(':message', htmlentities($comment, ENT_QUOTES, "UTF-8"), PDO::PARAM_STR);
+    }
+    return $query->execute();
   }
   return false;
   }
