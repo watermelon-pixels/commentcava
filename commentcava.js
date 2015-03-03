@@ -17,7 +17,8 @@ var button_to_comment = true;
 var allow_reply = true;
 
 
-function replyto(theid) {
+function replyto(theid)
+{
   var obj = document.getElementById('replyto');
   if (theid == -1) {
     obj.value = '';
@@ -27,7 +28,8 @@ function replyto(theid) {
   }
 }
 
-function toggle(theobj) {
+function toggle(theobj)
+{
   var obj = document.getElementById(theobj);
 
   if (obj.style.display == 'none') {
@@ -38,30 +40,39 @@ function toggle(theobj) {
   }
 }
 
-function show(theobj) {
+function show(theobj)
+{
   var obj = document.getElementById(theobj);
   obj.style.display = 'block';
 }
 
-function hide(theobj) {
+function hide(theobj)
+{
   var obj = document.getElementById(theobj);
   obj.style.display = 'none';
 }
 
-function reloadCaptcha() {
+function focusform()
+{
+    $('body').scrollTo('.comment_form');
+}
+
+function reloadCaptcha()
+{
   var obj = document.getElementById('captcha');
   obj.src = gurl + '?a=c&rand=' + Math.random();
 }
 
 
-$(function() {
+$(function()
+{
 
   $.ajax({
 
   url: gurl,
   data: {
     a: 'g',
-    url: document.URL.replace(window.location.hash, '')
+    url: window.location.href.split('#')[0]
   },
   type: "GET",
   dataType : "json",
@@ -69,28 +80,30 @@ $(function() {
   success: function( json )
   {
 
-  var comments = json
+    var comments = json
 
-  if (comments.length == 0)
-  {
-    $('#comments').html('<div class="comment">No comment</div>');
-  }
-  else
-  {
-    $('#comments').html('<h4 class="title">' + comments.length + ' comment(s)</h4>');
+    nbtotal = comments.length
 
-    for (var i=0; i<comments.length; i++)
+    if (comments.length == 0)
     {
-      $('#comments').append('<div class="comment level' + comments[i].level + '" style="display:none">\
-        <div>\
-        <span class="user">'+ comments[i].author + '</span>\
-        <span class="date">'+ comments[i].date + '</span>\
-        <span class="reply"><a href="#comment' + comments[i].id + '" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\')">reply</a></span>\
-        </div>\
-        <div class="message">'+ comments[i].message + '</div>\
-      </div>');
+      $('#comments').html('<div class="comment">No comment</div>');
     }
-  }
+    else
+    {
+      $('#comments').html('<h4 class="title">' + comments.length + ' comment(s)</h4>');
+
+      for (var i=0; i<comments.length; i++)
+      {
+        $('#comments').append('<div class="comment level' + comments[i].level + '" style="display:none">\
+          <div>\
+          <span class="user">'+ comments[i].author + '</span> - \
+          <span class="date"><a href="#comment' + comments[i].id + '" name="#comment' + comments[i].id + '">'+ comments[i].date + '</a></span> - \
+          <span class="reply"><a href="#" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');focusform();">reply</a></span>\
+          </div>\
+          <div class="message">'+ comments[i].message + '</div>\
+        </div>');
+      }
+    }
 
   },
 
@@ -101,49 +114,49 @@ $(function() {
 
   complete: function( xhr, status )
   {
-  if (button_to_comment == true)
-  {
-    $('#comments').append('<a id="addcomment" class="addcomment" style="display:none" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a>\
-    <form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
-      <input type="hidden" value="" id="replyto" name="replyto">\
-      <input type="hidden" value="' + document.URL.replace(window.location.hash, '') + '" name="url">\
-      <input type="text" value="" placeholder="your nickname" size="20" name="name">\
-      <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
-      <div class="comment_recaptcha">\
-      <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
-      <a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
-      </div>\
-      <div class="comment_submit">\
-      <input type="button" value="Cancel" onclick="hide(\'comment_form\');show(\'addcomment\')">\
-      <input type="submit" value="Send" name="submit">\
-      </div>\
-    </form>');
-  }
-  else
-  {
-    $('#comments').append('<form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
-      <input type="hidden" value="" id="replyto" name="replyto">\
-      <input type="hidden" name="url" value="' + document.URL.replace(window.location.hash, '') + '"/>\
-      <input type="text" value="" placeholder="your nickname" size="20" name="name">\
-      <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
-      <div class="comment_recaptcha">\
-        <input type="text" placeholder="Copy the code" name="captcha" class="captcha"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
-      </div>\
-      <div class="comment_submit">\
+    if (button_to_comment == true)
+    {
+      $('#comments').append('<div class="addcomment"><a id="addcomment" style="display:none" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
+      <form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
+        <input type="hidden" value="" id="replyto" name="replyto">\
+        <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
+        <input type="text" value="" placeholder="your nickname" size="20" name="name">\
+        <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
+        <div class="comment_recaptcha">\
+        <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
+        <a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
+        </div>\
+        <div class="comment_submit">\
+        <input type="button" value="Cancel" onclick="hide(\'comment_form\');show(\'addcomment\')">\
         <input type="submit" value="Send" name="submit">\
-      </div>\
-    </form>');
-  }
+        </div>\
+      </form>');
+    }
+    else
+    {
+      $('#comments').append('<form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
+        <input type="hidden" value="" id="replyto" name="replyto">\
+        <input type="hidden" name="url" value="' + window.location.href.split('#')[0] + '"/>\
+        <input type="text" value="" placeholder="your nickname" size="20" name="name">\
+        <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
+        <div class="comment_recaptcha">\
+          <input type="text" placeholder="Copy the code" name="captcha" class="captcha"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
+        </div>\
+        <div class="comment_submit">\
+          <input type="submit" value="Send" name="submit">\
+        </div>\
+      </form>');
+    }
 
-  $(".comment").each(function(i)
-  {
-    $(this).delay(200*i).fadeIn();
-  });
+    $(".comment").each(function(i)
+    {
+      $(this).delay(200*i).fadeIn();
+    });
 
-  $(".addcomment").each(function(i)
-  {
-    $(this).delay(1000*i).fadeIn();
-  });
+    $("#addcomment").each(function(i)
+    {
+      $(this).delay(200*nbtotal*i).fadeIn();
+    });
   }
 
   });
