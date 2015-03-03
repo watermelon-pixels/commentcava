@@ -58,7 +58,7 @@ $(function()
     else
     {
       $('#comments').html('<h4 class="title">' + comments.length + ' comment(s)</h4>');
-  
+
       if (use_animation === true)
       {
         style= 'style="display:none"';
@@ -101,7 +101,7 @@ $(function()
     localWebsite = '';
     if (localStorage.user) {localUser = localStorage.user}
     if (localStorage.website) {localWebsite = localStorage.website}
-    
+
     if (button_to_comment == true)
     {
       $('#comments').append('<div class="addcomment"><a id="addcomment" href="#form" onclick="javascript:cancelreply();show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
@@ -136,22 +136,24 @@ $(function()
       </form>');
     }
 
+    $('#comments').append('<span class="powered"><a href="https://github.com/fabienwang/commentcava">commentcava v2.0</a></span>');
+
     if (use_animation === true)
     {
-      
+
       $(".comment").each(function(i)
       {
         $(this).delay(200*i).fadeIn();
       });
-     
+
     }
-        
+
     //Use Timeago lib if used to display relative time.
     if (typeof($.timeago) == "function")
     {
       jQuery("time.timeago").timeago();
     }
-        
+
   }
 
   });
@@ -174,9 +176,9 @@ function replyto(theid)
 {
   var obj = document.getElementById('replyto');
   obj.value = theid;
-  
+
   jQuery(".highlighted").removeClass("highlighted");
-  
+
   var obj = document.getElementById('comment-' + theid);
   obj.classList.add("highlighted");
 }

@@ -16,6 +16,19 @@
   font-weight: bold;
 }
 
+.powered {
+  float: right;
+}
+
+.powered a {
+  text-decoration:none;
+  color: #888;
+  font-size: 0.9em;
+}
+.powered a:hover {
+  color: #21866f;
+}
+
 .comment {
   margin-top: 1em;
   margin-bottom: 1em;
