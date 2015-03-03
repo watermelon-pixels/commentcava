@@ -5,17 +5,31 @@
 var gurl = "/commentcava/commentcava.php";
 
 /*
+* Set to false to disable loading comments animation
+*/
+var use_animation = false;
+
+/*
 * User has to click a link to display the form
 */
 var button_to_comment = true;
 
-/*
-* Allow to reply to a comment (will display multiple comment levels)
-* If disabled, only consider comments as comments to the post/page
-* and all comments will be displayed on the same level
-*/
-var allow_reply = true;
 
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+* DO NOT CHANGE THE CODE BELOW, USE CONFIG VARIABLES ABOVE
+*/
 
 function replyto(theid)
 {
@@ -86,13 +100,21 @@ $(function()
     else
     {
       $('#comments').html('<h4 class="title">' + comments.length + ' comment(s)</h4>');
-
+  
+      if (use_animation === true)
+      {
+        style= 'style="display:none"';
+      }
+      else
+      {
+        style= '';
+      }
       for (var i=0; i<comments.length; i++)
       {
-        $('#comments').append('<div class="comment level' + comments[i].level + '" style="display:none">\
+        $('#comments').append('<div class="comment level' + comments[i].level + '" ' + style + '>\
           <div>\
           <span class="user">'+ comments[i].author + '</span> - \
-          <span class="date">'+ comments[i].date + '</span> - \
+          <time class="timeago" datetime="'+ comments[i].date + '">'+ comments[i].date + '</time> - \
           <span class="reply"><a href="#form" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');">reply</a></span>\
           </div>\
           <div class="message">'+ comments[i].message + '</div>\
@@ -111,7 +133,7 @@ $(function()
   {
     if (button_to_comment == true)
     {
-      $('#comments').append('<div class="addcomment"><a id="addcomment" style="display:none" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
+      $('#comments').append('<div class="addcomment"><a id="addcomment" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
       <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
@@ -143,16 +165,22 @@ $(function()
       </form>');
     }
 
-    $(".comment").each(function(i)
+    if (use_animation === true)
     {
-      $(this).delay(200*i).fadeIn();
-    });
-
-    $("#addcomment").each(function(i)
+      
+      $(".comment").each(function(i)
+      {
+        $(this).delay(200*i).fadeIn();
+      });
+     
+    }
+        
+    //Use Timeago lib if used to display relative time.
+    if (typeof($.timeago) == "function")
     {
-      $(this).delay(200*nbtotal*i).fadeIn();
-    });
-
+      jQuery("time.timeago").timeago();
+    }
+    
   }
 
   });
