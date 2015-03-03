@@ -52,11 +52,6 @@ function hide(theobj)
   obj.style.display = 'none';
 }
 
-function focusform()
-{
-    $('body').scrollTo('.comment_form');
-}
-
 function reloadCaptcha()
 {
   var obj = document.getElementById('captcha');
@@ -97,8 +92,8 @@ $(function()
         $('#comments').append('<div class="comment level' + comments[i].level + '" style="display:none">\
           <div>\
           <span class="user">'+ comments[i].author + '</span> - \
-          <span class="date"><a href="#comment' + comments[i].id + '" name="#comment' + comments[i].id + '">'+ comments[i].date + '</a></span> - \
-          <span class="reply"><a href="#" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');focusform();">reply</a></span>\
+          <span class="date">'+ comments[i].date + '</span> - \
+          <span class="reply"><a href="#form" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');">reply</a></span>\
           </div>\
           <div class="message">'+ comments[i].message + '</div>\
         </div>');
@@ -117,7 +112,7 @@ $(function()
     if (button_to_comment == true)
     {
       $('#comments').append('<div class="addcomment"><a id="addcomment" style="display:none" href="javascript:replyto(-1);show(\'comment_form\');hide(\'addcomment\')">Click here to leave a comment</a></div>\
-      <form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
+      <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
         <input type="text" value="" placeholder="your nickname" size="20" name="name">\
@@ -134,7 +129,7 @@ $(function()
     }
     else
     {
-      $('#comments').append('<form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
+      $('#comments').append('<a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" name="url" value="' + window.location.href.split('#')[0] + '"/>\
         <input type="text" value="" placeholder="your nickname" size="20" name="name">\
@@ -157,6 +152,7 @@ $(function()
     {
       $(this).delay(200*nbtotal*i).fadeIn();
     });
+
   }
 
   });

@@ -44,18 +44,15 @@
 }
 
 .comment .reply a {
-  color: #00aac2;
+  color: #21866f;
   font-weight: bold;
-}
-
-.comment .reply a {
   text-decoration: none;
 }
 
 .comment .message {
   padding-bottom: 1em;
   padding-top: 1em;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .addcomment {
