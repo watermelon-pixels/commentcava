@@ -118,17 +118,17 @@ class commentcava
 
   $img = imagecreatefrompng('./captcha/captcha.png');
 
-  $colors = array ( imagecolorallocate($img, 131, 154, 255),
-        imagecolorallocate($img,  89, 186, 255),
-        imagecolorallocate($img, 155, 190, 214),
-        imagecolorallocate($img, 255, 128, 234),
-        imagecolorallocate($img, 255, 123, 123) );
+  $colors = array ( imagecolorallocate($img, 217, 0, 0),
+        imagecolorallocate($img,  89, 0, 255),
+        imagecolorallocate($img, 0, 190, 214),
+        imagecolorallocate($img, 255, 0, 234),
+        imagecolorallocate($img, 0, 123, 123) );
 
-  imagettftext($img, 28, -10, 0, 37, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char1);
-  imagettftext($img, 28, 20, 37, 37, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char2);
-  imagettftext($img, 28, -35, 55, 37, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char3);
-  imagettftext($img, 28, 25, 100, 37, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char4);
-  imagettftext($img, 28, -15, 120, 37, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char5);
+  imagettftext($img, 17, 1, 25, 25, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char1);
+  imagettftext($img, 17, 20, 47, 25, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char2);
+  imagettftext($img, 17, 1, 65, 25, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char3);
+  imagettftext($img, 17, 24, 100, 25, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char4);
+  imagettftext($img, 17, 1, 120, 25, $colors[array_rand($colors)], $fonts[array_rand($fonts)], $char5);
 
   header('Content-Type: image/png');
   imagepng($img);

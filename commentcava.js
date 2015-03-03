@@ -12,7 +12,7 @@ var use_animation = false;
 /*
 * User has to click a link to display the form
 */
-var button_to_comment = true;
+var button_to_comment = false;
 
 
 
@@ -103,14 +103,12 @@ $(function()
       <a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form" style="display:none">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" value="' + window.location.href.split('#')[0] + '" name="url">\
-        <input type="text" value="" placeholder="your nickname" name="name">\
-        <input type="text" value="" placeholder="your website" name="website">\
-        <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
-        <div class="comment_recaptcha">\
+        <textarea placeholder="Message" value="" name="comment"></textarea>\
+        <input type="text" value="" class="name" placeholder="Name (optional)" name="name">\
+        <input type="text" value="" class="website" placeholder="Website (optional)" name="website">\
+        <div class="groupcode">\
         <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
         <a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
-        </div>\
-        <div class="comment_submit">\
         <input type="button" value="Cancel" onclick="javascript:cancelreply();hide(\'comment_form\');show(\'addcomment\')">\
         <input type="submit" value="Send" name="submit">\
         </div>\
@@ -121,15 +119,14 @@ $(function()
       $('#comments').append('<a name="form"></a><form method="post" action="' + gurl + '?a=p" id="comment_form" class="comment_form">\
         <input type="hidden" value="" id="replyto" name="replyto">\
         <input type="hidden" name="url" value="' + window.location.href.split('#')[0] + '"/>\
-        <input type="text" value="" placeholder="your nickname" name="name">\
-        <input type="text" value="" placeholder="your website" name="website">\
-        <textarea placeholder="Your comment?" value="" name="comment" cols="32" rows="2"></textarea>\
-        <div class="comment_recaptcha">\
-          <input type="text" placeholder="Copy the code" name="captcha" class="captcha"><a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
-        </div>\
-        <div class="comment_submit">\
-          <input type="button" value="Cancel" onclick="javascript:cancelreply();">\
-          <input type="submit" value="Send" name="submit">\
+        <textarea placeholder="Message" value="" name="comment"></textarea>\
+        <input type="text" value="" class="name" placeholder="Name (optional)" name="name">\
+        <input type="text" value="" class="website" placeholder="Website (optional)" name="website">\
+        <div class="groupcode">\
+        <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
+        <a title="Reload Image" href="javascript:reloadCaptcha()"><img class="captchaimg" id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
+        <input type="button" value="Cancel" onclick="javascript:cancelreply();">\
+        <input type="submit" value="Send" name="submit">\
         </div>\
       </form>');
     }
