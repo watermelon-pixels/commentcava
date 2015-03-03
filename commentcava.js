@@ -12,7 +12,7 @@ var use_animation = false;
 /*
 * User has to click a link to display the form
 */
-var button_to_comment = false;
+var button_to_comment = true;
 
 
 
@@ -108,7 +108,7 @@ $(function()
         <input type="text" value="" class="website" placeholder="Website (optional)" name="website">\
         <div class="groupcode">\
         <input type="text" placeholder="Copy the code" name="captcha" class="captcha">\
-        <a title="Reload Image" href="javascript:reloadCaptcha()"><img id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
+        <a title="Reload Image" href="javascript:reloadCaptcha()"><img class="captchaimg" id="captcha" alt="Enter code" src="' + gurl + '?a=c"></a>\
         <input type="button" value="Cancel" onclick="javascript:cancelreply();hide(\'comment_form\');show(\'addcomment\')">\
         <input type="submit" value="Send" name="submit">\
         </div>\
