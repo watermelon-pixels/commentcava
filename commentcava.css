@@ -2,7 +2,7 @@
   /*background-color: #CCC;*/
   margin: 0 auto;
   max-width: 968px;
-  padding: 1em;
+  padding: 1em 1em 0em 1em;
   font-size:0.9em;
 }
 
@@ -17,7 +17,10 @@
 }
 
 .powered {
-  float: right;
+  display:block;
+  width:100%;
+  text-align:right;
+  clear:both;
 }
 
 .powered a {
@@ -97,7 +100,6 @@
   text-decoration: none;
 }
 
-
 .comment_form textarea {
   display: block;
   width: 100%;
@@ -106,22 +108,18 @@
 }
 
 .comment_form input.name {
-  max-width: 25%;
   border: 1px solid #CCC;
   height: 25px;
 }
 .comment_form input.website {
-  max-width: 25%;
   border: 1px solid #CCC;
   height: 25px;
 }
 
-.comment_form .groupcode {
-  float: right;
-}
 .comment_form .groupcode .captcha {
   border: 1px solid #CCC;
-  height: 25px;
+  height: 1.7em;
+  width: 8em;
 }
 .comment_form .groupcode .captchaimg {
   vertical-align: middle;
@@ -136,4 +134,42 @@
   color: white;
   background-color: #21866f;
   font-weight: bold;
+}
+
+@media only screen and (max-width:780px) {
+  .comment_form input.name {
+    display:block;
+    width: 100%;
+  }
+  .comment_form input.website {
+    display:block;
+    width: 100%;
+  }
+  .comment_form .groupcode {
+    display:block;
+    width: 100%;
+  }
+  .comment_form .groupcode .captcha {
+    display:block;
+    width: 100%;
+  }
+  .comment_form .groupcode .captchaimg {
+    display:block;
+    margin: 0 auto;
+  }
+  .comment_form .groupcode input {
+    display:block;
+    width: 100%;
+  }
+}
+@media only screen and (min-width:780px) {
+  .comment_form input.name {
+    max-width: 25%;
+  }
+  .comment_form input.website {
+    max-width: 25%;
+  }
+  .comment_form .groupcode {
+    float: right;
+  }
 }
