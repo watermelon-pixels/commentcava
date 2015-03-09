@@ -49,45 +49,51 @@ $(function()
 
     var comments = json
 
-    nbtotal = comments.length
-
-    if (comments.length == 0)
+    nbtotal = comments.entries.length
+    
+    if (comments.return_code == 0)
     {
-      $('#comments').html('<div class="comment">No comment</div>');
-    }
-    else
-    {
-      $('#comments').html('<h4 class="title">' + comments.length + ' comment(s)</h4>');
-
-      if (use_animation === true)
+      if (comments.entries.length == 0)
       {
-        style= 'style="display:none"';
+        $('#comments').html('<div class="comment">No comment</div>');
       }
       else
       {
-        style= '';
-      }
-      for (var i=0; i<comments.length; i++)
-      {
-        if (comments[i].website != '')
+        $('#comments').html('<h4 class="title">' + comments.entries.length + ' comment(s)</h4>');
+
+        if (use_animation === true)
         {
-          spanuser = '<a href="' + comments[i].website + '">' + comments[i].author + '</a>';
+          style= 'style="display:none"';
         }
         else
         {
-          spanuser = comments[i].author;
+          style= '';
         }
-        $('#comments').append('<div id="comment-' + comments[i].id + '" class="comment level' + comments[i].level + '" ' + style + '>\
-          <div>\
-          <span class="user">'+ spanuser + '</span> - \
-          <time class="timeago" datetime="'+ comments[i].date + '">'+ comments[i].date + '</time> - \
-          <span class="reply"><a href="#form" onclick="replyto(' + comments[i].id + ');show(\'comment_form\');hide(\'addcomment\');">reply</a></span>\
-          </div>\
-          <div class="message">'+ comments[i].message + '</div>\
-        </div>');
+        for (var i=0; i<comments.entries.length; i++)
+        {
+          if (comments.entries[i].website != '')
+          {
+            spanuser = '<a href="' + comments.entries[i].website + '">' + comments.entries[i].author + '</a>';
+          }
+          else
+          {
+            spanuser = comments.entries[i].author;
+          }
+          $('#comments').append('<div id="comment-' + comments.entries[i].id + '" class="comment level' + comments.entries[i].level + '" ' + style + '>\
+            <div>\
+            <span class="user">'+ spanuser + '</span> - \
+            <time class="timeago" datetime="'+ comments.entries[i].date + '">'+ comments.entries[i].date + '</time> - \
+            <span class="reply"><a href="#form" onclick="replyto(' + comments.entries[i].id + ');show(\'comment_form\');hide(\'addcomment\');">reply</a></span>\
+            </div>\
+            <div class="message">'+ comments.entries[i].message + '</div>\
+          </div>');
+        }
       }
     }
-
+    else
+    {
+      $('#comments').html('<div class="comment">Error while getting comments</div>');
+    }
   },
 
   error: function( xhr, status )
