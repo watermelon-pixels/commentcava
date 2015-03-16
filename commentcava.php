@@ -12,14 +12,9 @@ $commentcava = new commentcava($db);
 //Get comments
 if (isset($_GET['a']) && ($_GET['a'] == 'g') and isset($_GET['url'])) {
 
-  $result = ['return_code' => 4, 'entries' => [] ];
+  $result = ['return_code' => 0, 'entries' => [] ];
   
   $result['entries'] = $commentcava->getComments($_GET['url']);
-  
-  if (count($result['entries']))
-  {
-    $result['return_code'] = 0;
-  }
   
   /*header('Cache-Control: no-cache, must-revalidate');
   header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -40,5 +35,11 @@ if (isset($_GET['a']) && $_GET['a'] == 'p') {
 
   //Add the comment
   $result = $commentcava->addComment($_POST['replyto'], $_POST['url'], $_POST['name'], $_POST['website'], $_POST['comment'], $_POST['captcha'] );
-  echo json_encode($result);
+  if ($result) {
+    header('Location: '.$_POST['url']);
+  }
+  else
+  {
+    header('Location: '.$_POST['url']);
+  }
 }

@@ -56,6 +56,16 @@ class commentcava
     
     if (!empty($website)) $website= $this->addScheme($website);
     
+    if (empty($comment))
+    {
+      
+    }
+    
+    if (empty($captcha) or strtoupper($captcha) != $_SESSION['captcha'])
+    {
+      
+    }
+    
     //Check if username or message are not empty && captcha is okay
     if (!empty($comment) && !empty($captcha) && strtoupper($captcha) == $_SESSION['captcha'])
     {
