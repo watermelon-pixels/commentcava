@@ -4,17 +4,15 @@ commentcava
 what is commentcava?
 -------------
 
-commentçava is a comment system that can work in javascript for static websites (ie. Jekyll) or in full php without javascript. It is powered by a SQlite database and contains a captcha to avoid flood.
+commentçava is a multi-level comment system that can work in javascript for static websites (ie. Jekyll).
+It allows anonymous posting. Comments can shown a username and a url to a website in addition to the message.
+By default on the php server script, I uses a PDO SQlite database.
+To avoid flood, there is a captcha.
 It should work with multiple domains (crossdomains) too, but i haven't tested it.
 
 SQlite database
 -------------
-SQlite database is created automatically so you don't have to bother about it.
-It contains 1 table "comments" which have the following fields: url, author, date, message
-*URL is to be filled with the page URL
-*Author is a free text
-*Date is automatically filled with current datetime value
-*Message is a free text
+SQlite database can be created with the install php script.
 
 How to use it?
 -------------
