@@ -50,7 +50,7 @@ $(function()
     var comments = json
 
     nbtotal = comments.entries.length
-    
+
     if (comments.return_code == 0)
     {
       if (comments.entries.length == 0)
@@ -107,6 +107,12 @@ $(function()
     localWebsite = '';
     if (localStorage.user) {localUser = localStorage.user}
     if (localStorage.website) {localWebsite = localStorage.website}
+
+    var msg = document.location.hash.split("|");
+    if (msg[1] != null)
+    {
+      alert(decodeURI(msg[1]));
+    }
 
     if (button_to_comment == true)
     {
